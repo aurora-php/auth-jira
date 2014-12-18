@@ -1,0 +1,32 @@
+{
+    "name":         "octris/jira",
+    "type":         "library",
+    "description":  "JIRA Authentication adapter for octris framework.",
+    "keywords":     [],
+    "homepage":     "http://github.com/octris/jira/",
+    "license":      "BSD-3-Clause",
+
+    "authors":      [{
+        "name":         "Harald Lapp",
+        "email":        "harald@octris.org",
+        "homepage":     "http://www.octris.org/"
+    }],
+
+    "repositories": [
+        {
+            "url":  "https://github.com/octris/core.git",
+            "type": "git"
+        }
+    ],
+
+    "require":      {
+        "octris/core":   "dev-master",
+        "cpliakas/jira": "~1.0"
+    },
+
+    "autoload":     {
+        "psr-4":        {
+            "Octris\\Jira\\": "libs/"
+        }
+    }
+}
