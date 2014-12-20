@@ -74,6 +74,7 @@ class Jira implements \Octris\Core\Auth\IAdapter
     public function authenticate()
     {
         $result = \Octris\Core\Auth::AUTH_FAILURE;
+        $token = null;
 
         if (empty($this->username)) {
             throw new \Exception('Username cannot be empty');
@@ -83,12 +84,23 @@ class Jira implements \Octris\Core\Auth\IAdapter
         }
 
         $jira = new JiraClient($this->url);
-        $token = $jira->login($this->username, $this->credential);
 
-        if (!$token) {
-            $result = \Octris\Core\Auth::IDENTITY_UNKNOWN;
-        } else {
-            $result = \Octris\Core\Auth::AUTH_SUCCESS;
+        try {
+            $token = $jira->login($this->username, $this->credential);
+
+            if (!$token) {
+                $result = \Octris\Core\Auth::IDENTITY_UNKNOWN;
+            } else {
+                $result = \Octris\Core\Auth::AUTH_SUCCESS;
+            }
+        } catch(\SoapFault $e) {
+            if (preg_match('/^com.atlassian.jira.rpc.exception.RemoteAuthenticationException: (.+)$/i', $e->getMessage(), $match)) {
+                if (strcasecmp($match[1], 'Invalid username or password.') == 0) {
+                    $result = \Octris\Core\Auth::IDENTITY_UNKNOWN;
+                }
+            } else {
+                throw($e);
+            }
         }
 
         return new \Octris\Core\Auth\Identity(
