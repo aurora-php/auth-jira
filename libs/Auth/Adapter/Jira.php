@@ -13,6 +13,12 @@ namespace Octris\Jira\Auth\Adapter;
 
 use Jira\JiraClient;
 
+/**
+ * JIRA Authentication adapter.
+ *
+ * @copyright   copyright (c) 2014-2016 by Harald Lapp
+ * @author      Harald Lapp <harald@octris.org>
+ */
 class Jira implements \Octris\Core\Auth\IAdapter
 {
     /**
