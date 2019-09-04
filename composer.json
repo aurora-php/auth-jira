@@ -1,5 +1,5 @@
 {
-    "name":         "octris/jira",
+    "name":         "octris/auth-jira",
     "type":         "library",
     "description":  "JIRA Authentication adapter for octris framework.",
     "keywords":     [],
